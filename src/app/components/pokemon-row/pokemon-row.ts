@@ -130,4 +130,22 @@ export class PokemonRowComponent {
     this.resetRequest.emit(this.pokemon().id);
   }
 
+  getTotalReqColor(): string {
+    const req = this.totalReq();
+
+    if (req === 0) return 'bg-gray-100';
+    if (req > 510) return 'bg-red-300';
+    if (req >= 508) return 'bg-green-300';
+    return 'bg-yellow-100';
+  }
+
+  getTotalDoneColor(): string {
+    const req = this.totalReq();
+    const done = this.totalDone();
+
+    if (done === 0) return 'bg-white';
+    if (done > 510 || done > req) return 'bg-red-300';
+    if (req > 0 && done === req) return 'bg-green-300';
+    return 'bg-yellow-100';
+  }
 }
