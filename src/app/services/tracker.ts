@@ -6,7 +6,6 @@ import { StatType } from '../models/stat-type';
   providedIn: 'root',
 })
 export class TrackerService {
-
   team = signal<PokemonTracker[]>(this.loadFromLocalStorage());
 
   constructor() {
@@ -32,7 +31,7 @@ export class TrackerService {
       id: i.toString(),
       isActive: true,
       name: '',
-      nature: '',
+      nature: null,
       item: null,
       stats: {
         hp: { req: 0, done: 0 },
@@ -77,4 +76,33 @@ export class TrackerService {
       return currentTeam;
     });
   }
+
+  resetPokemon(id: string): void {
+    this.team.update((currentTeam) =>
+      currentTeam.map((p) =>
+        p.id === id
+          ? {
+              ...p,
+              name: '',
+              nature: null,
+              item: null,
+              isActive: true,
+              stats: {
+                hp: { req: 0, done: 0 },
+                atk: { req: 0, done: 0 },
+                def: { req: 0, done: 0 },
+                spa: { req: 0, done: 0 },
+                spd: { req: 0, done: 0 },
+                spe: { req: 0, done: 0 },
+              },
+            }
+          : p,
+      ),
+    );
+  }
+
+  resetAll(): void {
+    this.team.set(this.getEmptyTeam());
+  }
+
 }

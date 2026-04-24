@@ -1,0 +1,60 @@
+<div class="overflow-x-auto p-4">
+  <table class="w-full border-collapse text-sm">
+    <thead>
+    <tr class="bg-gray-200 text-gray-700 uppercase tracking-wider text-center">
+      <th class="border-b border-t border-r p-2 w-16" rowspan="2">In team ?</th>
+      <th class="border p-2 w-48" rowspan="2">Pokémon</th>
+      <th class="border p-2 w-24" rowspan="2">Nature</th>
+      @for (stat of statsList; track stat.key) {
+        <th class="border p-2" colspan="2">{{ stat.label }}</th>
+      }
+      <th class="border p-2" colspan="2">TOTAL EV</th>
+      <th class="border p-2 w-40" rowspan="2">Item</th>
+      <th class="border-b border-t border-l p-2 w-12" rowspan="2"></th>
+    </tr>
+
+    <tr class="bg-gray-100 text-gray-500 text-xs text-center">
+      @for (stat of statsList; track stat.key) {
+        <th class="border p-1 w-16">Req</th>
+        <th class="border p-1 w-16">Done</th>
+      }
+      <th class="border p-1 w-16">Req</th>
+      <th class="border p-1 w-16">Done</th>
+    </tr>
+    </thead>
+
+    <tbody>
+      @for (pokemon of team(); track pokemon.id) {
+        <tr app-pokemon-row
+            [pokemon]="pokemon"
+            (pokemonChange)="onPokemonUpdate($event)"
+            (resetRequest)="onResetPokemon($event)"
+            class="border-b hover:bg-gray-50 text-center text-sm">
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<div class="p-6 bg-gray-50 border-t flex flex-col gap-4 rounded-b-xl">
+  <h3 class="font-semibold text-gray-700">Pokémons vaincus (+ EV)</h3>
+
+  <div class="grid grid-cols-6 gap-4">
+    @for (stat of statsList; track stat.key) {
+      <div class="flex flex-col gap-2">
+        <button (click)="gainEv(stat.key, 1)"
+                class="py-2 px-4 bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold rounded shadow transition-colors cursor-pointer text-sm">
+          +1 {{ stat.label }}
+        </button>
+        <button (click)="gainEv(stat.key, 2)"
+                class="py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded shadow transition-colors cursor-pointer text-sm">
+          +2 {{ stat.label }}
+        </button>
+        <button (click)="gainEv(stat.key, 3)"
+                class="py-2 px-4 bg-blue-800 hover:bg-blue-900 text-white font-bold rounded shadow transition-colors cursor-pointer text-sm">
+          +3 {{ stat.label }}
+        </button>
+      </div>
+    }
+  </div>
+</div>

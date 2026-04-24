@@ -1,12 +1,16 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { PokemonTableComponent } from './components/pokemon-table/pokemon-table';
+import { TrackerService } from './services/tracker';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [PokemonTableComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('ev-tracker');
+
+  constructor(public trackerService: TrackerService) {
+  }
+
 }
